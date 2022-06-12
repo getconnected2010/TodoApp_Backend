@@ -32,4 +32,15 @@ public class TodoServiceImpl implements TodoServiceInterface{
     public void addTodo(TodoEntity todoEntity) {
         todoRepository.save(todoEntity);
     }
+
+    @Override
+    public TodoEntity findById(Long Id) {
+        return todoRepository.findById(Id).get();
+    }
+
+    @Override
+    public String deleteById(Long Id) {
+        todoRepository.deleteById(Id);
+        return "Successfully deleted";
+    }
 }

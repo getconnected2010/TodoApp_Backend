@@ -13,4 +13,8 @@ public interface TodoServiceInterface {
     List<TodoEntity> findByUsername(String username);
 
     void addTodo(TodoEntity todoEntity);
+
+    TodoEntity findById(Long Id);
+
+    String deleteById(Long Id);
 }

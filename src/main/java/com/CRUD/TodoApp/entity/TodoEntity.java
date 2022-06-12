@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -21,7 +22,7 @@ public class TodoEntity {
     private Long todoId;
     private String title;
     private String description;
-    private Date dueDate;
+    private java.sql.Date dueDate;
     private boolean completed;
     private String username;
 }
