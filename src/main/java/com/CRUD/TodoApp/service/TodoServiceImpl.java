@@ -43,4 +43,14 @@ public class TodoServiceImpl implements TodoServiceInterface{
         todoRepository.deleteById(Id);
         return "Successfully deleted";
     }
+
+    @Override
+    public List<TodoEntity> findAllByDescriptionContaining(String description) {
+        return todoRepository.findAllByDescriptionContaining(description);
+    }
+
+    @Override
+    public List<TodoEntity> findAllByCompleted(Boolean bool) {
+        return todoRepository.findAllByCompleted(bool);
+    }
 }

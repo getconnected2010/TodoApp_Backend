@@ -17,4 +17,8 @@ public interface TodoServiceInterface {
     TodoEntity findById(Long Id);
 
     String deleteById(Long Id);
+
+    List<TodoEntity> findAllByDescriptionContaining(String description);
+
+    List<TodoEntity> findAllByCompleted(Boolean bool);
 }

@@ -25,17 +25,32 @@ public class TodoController {
         return todoService.getAllTodo();
     }
 
+    //fetches all tasks associated to specific username
     @GetMapping("/todo/username/{username}")
     public List<TodoEntity> getTodoByUsername(@PathVariable("username") String username){
         return todoService.findByUsername(username);
     }
 
+    //fetches all tasks that have any matching word in their description.
+    @GetMapping("/todo/description/{description}")
+    public List<TodoEntity> findByDescription(@PathVariable("description") String description){
+    return todoService.findAllByDescriptionContaining(description);
+    }
+
+    //fetches all tasks that are either completed or not completed depending on the bool value in param.
+    @GetMapping("/todo/completed/{bool}")
+    public List<TodoEntity> findAllByCompleted(@PathVariable("bool") boolean bool){
+        return todoService.findAllByCompleted(bool);
+    }
+
+    //adds to the todo list
     @PostMapping("/todo/add")
     public String addTodo(@RequestBody TodoEntity todoEntity){
         todoService.addTodo(todoEntity);
         return "Task successfully added to the list";
     }
 
+    //deletes a todo list using id.
     @DeleteMapping("/todo/delete/{id}")
     public TodoEntity deleteTodo(@PathVariable("id") Long todoId){
         TodoEntity deletedEntity = todoService.findById(todoId);

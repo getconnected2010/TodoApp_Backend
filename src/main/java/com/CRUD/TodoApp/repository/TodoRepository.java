@@ -10,4 +10,8 @@ import java.util.List;
 public interface TodoRepository extends JpaRepository<TodoEntity, Long> {
 
     List<TodoEntity> findAllByUsername(String username);
+
+    List<TodoEntity> findAllByDescriptionContaining(String description);
+
+    List<TodoEntity> findAllByCompleted(Boolean bool);
 }
