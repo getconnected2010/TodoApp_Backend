@@ -43,18 +43,37 @@ public class TodoController {
         return todoService.findAllByCompleted(bool);
     }
 
-    //adds to the todo list
+    //adds to the todolist
     @PostMapping("/todo/add")
     public String addTodo(@RequestBody TodoEntity todoEntity){
         todoService.addTodo(todoEntity);
         return "Task successfully added to the list";
     }
 
-    //deletes a todo list using id.
-    @DeleteMapping("/todo/delete/{id}")
+    //takes in Id in param and todoList obj in body and updates database obj.
+    @PutMapping("/todo/update/{id}")
+    public TodoEntity updateTodo(@PathVariable("id") Long Id, @RequestBody TodoEntity todoEntity){
+        return todoService.updateTodo(Id, todoEntity);
+    }
+
+    //takes completion status and Id and updates database
+    @PutMapping("/todo/update/completion/{bool}/{id}")
+    public int updateCompletedStatus(@PathVariable("bool") Boolean bool, @PathVariable("id") Long Id){
+        return todoService.updateCompletedStatus(bool, Id);
+    }
+
+    //deletes a todoList list using id.
+    @DeleteMapping("/todo/delete/id/{id}")
     public TodoEntity deleteTodo(@PathVariable("id") Long todoId){
         TodoEntity deletedEntity = todoService.findById(todoId);
         todoService.deleteById(todoId);
         return deletedEntity;
     }
+
+    //deletes all items in todolist with a username
+    @DeleteMapping("/todo/delete/username/{username}")
+    public int deleteByUsername(@PathVariable("username") String username){
+        return todoService.deleteByUsername(username);
+    }
+
 }

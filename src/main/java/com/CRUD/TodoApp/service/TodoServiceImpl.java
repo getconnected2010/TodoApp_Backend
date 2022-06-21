@@ -2,6 +2,7 @@ package com.CRUD.TodoApp.service;
 
 import com.CRUD.TodoApp.entity.TodoEntity;
 import com.CRUD.TodoApp.repository.TodoRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,11 @@ public class TodoServiceImpl implements TodoServiceInterface{
     }
 
     @Override
+    public int deleteByUsername(String username) {
+        return todoRepository.deleteByUsername(username);
+    }
+
+    @Override
     public List<TodoEntity> findAllByDescriptionContaining(String description) {
         return todoRepository.findAllByDescriptionContaining(description);
     }
@@ -52,5 +58,20 @@ public class TodoServiceImpl implements TodoServiceInterface{
     @Override
     public List<TodoEntity> findAllByCompleted(Boolean bool) {
         return todoRepository.findAllByCompleted(bool);
+    }
+
+    //updates a database record, saves it, and returns the updated obj.
+    @Override
+    public TodoEntity updateTodo(Long Id, TodoEntity todoEntity) {
+        TodoEntity dbTodo = todoRepository.findById(Id).get();
+        todoEntity.setTodoId(Id);
+        BeanUtils.copyProperties(todoEntity, dbTodo);
+        todoRepository.save(dbTodo);
+        return dbTodo;
+    }
+
+    @Override
+    public int updateCompletedStatus(Boolean bool, Long Id) {
+        return todoRepository.updateCompletedStatus(bool, Id);
     }
 }
