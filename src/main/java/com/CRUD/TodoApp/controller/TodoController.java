@@ -13,7 +13,7 @@ import java.io.Console;
 import java.util.List;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class TodoController {
 
     @Autowired
@@ -51,9 +51,9 @@ public class TodoController {
     }
 
     //takes in Id in param and todoList obj in body and updates database obj.
-    @PutMapping("/todo/update/{id}")
-    public TodoEntity updateTodo(@PathVariable("id") Long Id, @RequestBody TodoEntity todoEntity){
-        return todoService.updateTodo(Id, todoEntity);
+    @PutMapping("/todo/update")
+    public TodoEntity updateTodo(@RequestBody TodoEntity todoEntity){
+        return todoService.updateTodo(todoEntity);
     }
 
     //takes completion status and Id and updates database

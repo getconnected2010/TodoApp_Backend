@@ -24,7 +24,7 @@ public interface TodoServiceInterface {
 
     List<TodoEntity> findAllByCompleted(Boolean bool);
 
-    TodoEntity updateTodo(Long Id, TodoEntity todoEntity);
+    TodoEntity updateTodo(TodoEntity todoEntity);
 
     //updates completion status using ID.
     int updateCompletedStatus(Boolean bool, Long Id);

@@ -62,9 +62,8 @@ public class TodoServiceImpl implements TodoServiceInterface{
 
     //updates a database record, saves it, and returns the updated obj.
     @Override
-    public TodoEntity updateTodo(Long Id, TodoEntity todoEntity) {
-        TodoEntity dbTodo = todoRepository.findById(Id).get();
-        todoEntity.setTodoId(Id);
+    public TodoEntity updateTodo(TodoEntity todoEntity) {
+        TodoEntity dbTodo = todoRepository.findById(todoEntity.getTodoId()).get();
         BeanUtils.copyProperties(todoEntity, dbTodo);
         todoRepository.save(dbTodo);
         return dbTodo;
