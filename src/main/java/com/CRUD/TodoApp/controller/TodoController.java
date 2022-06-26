@@ -1,15 +1,12 @@
 package com.CRUD.TodoApp.controller;
 
 import com.CRUD.TodoApp.entity.TodoEntity;
+import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
 import com.CRUD.TodoApp.service.TodoServiceImpl;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-import java.io.Console;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +24,7 @@ public class TodoController {
 
     //fetches all tasks associated to specific username
     @GetMapping("/todo/username/{username}")
-    public List<TodoEntity> getTodoByUsername(@PathVariable("username") String username){
+    public List<TodoEntity> getTodoByUsername(@PathVariable("username") String username) throws UserNotFoundCustomException {
         return todoService.findByUsername(username);
     }
 
@@ -45,14 +42,14 @@ public class TodoController {
 
     //adds to the todolist
     @PostMapping("/todo/add")
-    public String addTodo(@RequestBody TodoEntity todoEntity){
+    public String addTodo(@Valid @RequestBody TodoEntity todoEntity){
         todoService.addTodo(todoEntity);
         return "Task successfully added to the list";
     }
 
     //takes in Id in param and todoList obj in body and updates database obj.
     @PutMapping("/todo/update")
-    public TodoEntity updateTodo(@RequestBody TodoEntity todoEntity){
+    public TodoEntity updateTodo(@Valid @RequestBody TodoEntity todoEntity){
         return todoService.updateTodo(todoEntity);
     }
 

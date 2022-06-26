@@ -1,6 +1,7 @@
 package com.CRUD.TodoApp.service;
 
 import com.CRUD.TodoApp.entity.TodoEntity;
+import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface TodoServiceInterface {
 
     TodoEntity findByUserId(Long Id);
 
-    List<TodoEntity> findByUsername(String username);
+    List<TodoEntity> findByUsername(String username) throws UserNotFoundCustomException;
 
     void addTodo(TodoEntity todoEntity);
 

@@ -1,6 +1,7 @@
 package com.CRUD.TodoApp.service;
 
 import com.CRUD.TodoApp.entity.TodoEntity;
+import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
 import com.CRUD.TodoApp.repository.TodoRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,15 @@ public class TodoServiceImpl implements TodoServiceInterface{
         return todoRepository.findById(Id).get();
     }
 
+    //finds all tasks for specific username. If username not found, it throws custom exception.
     @Override
-    public List<TodoEntity> findByUsername(String username) {
-        return todoRepository.findAllByUsername(username);
+    public List<TodoEntity> findByUsername(String username) throws UserNotFoundCustomException {
+        List<TodoEntity> usernameTodo = todoRepository.findAllByUsername(username);
+        if(usernameTodo.isEmpty()){
+            throw new UserNotFoundCustomException("username '" + username + "' doesn't exist in database.");
+        }else {
+            return usernameTodo;
+        }
     }
 
     @Override

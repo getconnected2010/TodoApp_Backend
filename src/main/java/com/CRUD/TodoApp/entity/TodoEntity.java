@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Data
@@ -18,6 +19,7 @@ public class TodoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long todoId;
+    @NotBlank(message = "Title field cannot be empty.")
     private String title;
     private String description;
     private java.sql.Date dueDate;
