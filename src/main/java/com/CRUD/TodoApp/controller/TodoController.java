@@ -2,11 +2,14 @@ package com.CRUD.TodoApp.controller;
 
 import com.CRUD.TodoApp.entity.TodoEntity;
 import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
+import com.CRUD.TodoApp.inputValidations.ValidUsername;
 import com.CRUD.TodoApp.service.TodoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @RestController
@@ -17,6 +20,7 @@ public class TodoController {
     TodoServiceImpl todoService;
 
     @GetMapping("/todo/all")
+    @Validated
     public List<TodoEntity> getAllTodo(){
         System.out.println(todoService.getAllTodo());
         return todoService.getAllTodo();
@@ -24,8 +28,8 @@ public class TodoController {
 
     //fetches all tasks associated to specific username
     @GetMapping("/todo/username/{username}")
-    public List<TodoEntity> getTodoByUsername(@PathVariable("username") String username) throws UserNotFoundCustomException {
-        return todoService.findByUsername(username);
+    public List<TodoEntity> getTodoByUsername(@Valid ValidUsername validUsername) throws UserNotFoundCustomException {
+        return todoService.findByUsername(validUsername.getUsername());
     }
 
     //fetches all tasks that have any matching word in their description.
@@ -42,7 +46,7 @@ public class TodoController {
 
     //adds to the todolist
     @PostMapping("/todo/add")
-    public String addTodo(@Valid @RequestBody TodoEntity todoEntity){
+    public String addTodo(@Valid @RequestBody TodoEntity todoEntity) throws UserNotFoundCustomException{
         todoService.addTodo(todoEntity);
         return "Task successfully added to the list";
     }

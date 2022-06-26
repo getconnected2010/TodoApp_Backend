@@ -1,6 +1,7 @@
 package com.CRUD.TodoApp.service;
 
 import com.CRUD.TodoApp.entity.TodoEntity;
+import com.CRUD.TodoApp.entity.UserEntity;
 import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
 import com.CRUD.TodoApp.repository.TodoRepository;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,9 @@ public class TodoServiceImpl implements TodoServiceInterface{
 
     @Autowired
     TodoRepository todoRepository;
+
+    @Autowired
+    UserServiceImpl userService;
 
     @Override
     public List<TodoEntity> getAllTodo() {
@@ -37,8 +41,13 @@ public class TodoServiceImpl implements TodoServiceInterface{
     }
 
     @Override
-    public void addTodo(TodoEntity todoEntity) {
-        todoRepository.save(todoEntity);
+    public void addTodo(TodoEntity todoEntity) throws UserNotFoundCustomException{
+        UserEntity userEntity = userService.findUserByUsername(todoEntity.getUsername());
+        if(userEntity != null){
+            todoRepository.save(todoEntity);
+        }else{
+            throw new UserNotFoundCustomException("username '"+ todoEntity.getUsername() +"' doesn't exist. Check again or add username first.");
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.CRUD.TodoApp.advice;
 
 import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,9 +24,21 @@ public class ApplicationExceptionHandler {
         return errorList;
     }
 
+    //custom exception to handle when username don't exist in database
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(UserNotFoundCustomException.class)
     public String handleUserNotFoundException(UserNotFoundCustomException ex){
         return ex.getMessage();
+    }
+
+    //handles exception when userinput of username is invalid. It iterates and sends them back as response.
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BindException.class)
+    public List<String> handleInvalidUserInput(BindException ex){
+        List<String> validationErrors = new ArrayList<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->{
+            validationErrors.add(error.getDefaultMessage());
+        });
+        return validationErrors;
     }
 }

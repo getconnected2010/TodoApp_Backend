@@ -13,7 +13,7 @@ public interface TodoServiceInterface {
 
     List<TodoEntity> findByUsername(String username) throws UserNotFoundCustomException;
 
-    void addTodo(TodoEntity todoEntity);
+    void addTodo(TodoEntity todoEntity) throws UserNotFoundCustomException;
 
     TodoEntity findById(Long Id);
 
