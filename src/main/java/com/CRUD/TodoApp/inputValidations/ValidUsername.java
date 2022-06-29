@@ -13,6 +13,6 @@ import javax.validation.constraints.Size;
 public class ValidUsername {
 
     @Size(min = 3, max = 12, message = "username should be minimum 3 and maximum 12 characters.")
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Only letters and numbers allowed.")
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Only letters and numbers allowed as username.")
     private String username;
 }

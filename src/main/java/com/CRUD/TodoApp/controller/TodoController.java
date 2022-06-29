@@ -7,9 +7,11 @@ import com.CRUD.TodoApp.service.TodoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -49,6 +51,19 @@ public class TodoController {
     public String addTodo(@Valid @RequestBody TodoEntity todoEntity) throws UserNotFoundCustomException{
         todoService.addTodo(todoEntity);
         return "Task successfully added to the list";
+    }
+
+    //uploads user avatar
+    @PostMapping("/todo/avatar")
+    public String uploadAvatar(@RequestParam MultipartFile[] files) throws IOException {
+        for (MultipartFile file: files) {
+            System.out.println(file.getBytes());
+            System.out.println(file.getContentType());
+            System.out.println(file.getOriginalFilename());
+            System.out.println(file.getSize() / 1000000.00);
+            System.out.println(file.getResource());
+        };
+        return "file uploaded";
     }
 
     //takes in Id in param and todoList obj in body and updates database obj.
