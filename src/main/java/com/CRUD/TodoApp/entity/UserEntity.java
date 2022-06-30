@@ -20,4 +20,5 @@ public class UserEntity {
     private Long userId;
     private String username;
     private String userEmail;
+    private String avatarUrl;
 }

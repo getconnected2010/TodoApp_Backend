@@ -53,18 +53,18 @@ public class TodoController {
         return "Task successfully added to the list";
     }
 
-    //uploads user avatar
-    @PostMapping("/todo/avatar")
-    public String uploadAvatar(@RequestParam MultipartFile[] files) throws IOException {
-        for (MultipartFile file: files) {
-            System.out.println(file.getBytes());
-            System.out.println(file.getContentType());
-            System.out.println(file.getOriginalFilename());
-            System.out.println(file.getSize() / 1000000.00);
-            System.out.println(file.getResource());
-        };
-        return "file uploaded";
-    }
+//    //uploads multiple files
+//    @PostMapping("/todo/avatar")
+//    public String uploadAvatar(@RequestParam MultipartFile[] files) throws IOException {
+//        for (MultipartFile file: files) {
+//            System.out.println(file.getBytes());
+//            System.out.println(file.getContentType());
+//            System.out.println(file.getOriginalFilename());
+//            System.out.println(file.getSize() / 1000000.00);
+//            System.out.println(file.getResource());
+//        };
+//        return "file uploaded";
+//    }
 
     //takes in Id in param and todoList obj in body and updates database obj.
     @PutMapping("/todo/update")
