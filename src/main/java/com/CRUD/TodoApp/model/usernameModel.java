@@ -1,4 +1,4 @@
-package com.CRUD.TodoApp.inputValidations;
+package com.CRUD.TodoApp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ValidUsername {
+public class usernameModel {
 
     @Size(min = 3, max = 12, message = "username should be minimum 3 and maximum 12 characters.")
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Only letters and numbers allowed as username.")
