@@ -1,6 +1,8 @@
 package com.CRUD.TodoApp.advice;
 
 import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
+import com.amazonaws.SdkClientException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -31,7 +33,8 @@ public class ApplicationExceptionHandler {
         return ex.getMessage();
     }
 
-    //handles exception when userinput of username is invalid. It iterates and sends them back as response.
+
+    //handles exception when user input of username is invalid. It iterates and sends them back as response.
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
     public List<String> handleInvalidUserInput(BindException ex){
@@ -40,5 +43,19 @@ public class ApplicationExceptionHandler {
             validationErrors.add(error.getDefaultMessage());
         });
         return validationErrors;
+    }
+
+    //handles aws error
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(SdkClientException.class)
+    public String handleAWSError(SdkClientException ex){
+        return "Internal server error occurred while uploading pictures";
+    }
+
+    //handles database errors
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public String handleDatabaseError(DataIntegrityViolationException ex){
+        return "Error processing request in database.";
     }
 }
