@@ -2,8 +2,6 @@ package com.CRUD.TodoApp.service;
 
 import com.CRUD.TodoApp.entity.UserEntity;
 import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
-import com.CRUD.TodoApp.model.usernameModel;
-import org.apache.catalina.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -22,4 +20,6 @@ public interface UserServiceInterface {
     String updateUser(UserEntity userEntity, Long Id);
 
     String updateAvatar(MultipartFile file, String username) throws IOException, UserNotFoundCustomException;
+
+    String getAvatarUrl(String username) throws UserNotFoundCustomException;
 }

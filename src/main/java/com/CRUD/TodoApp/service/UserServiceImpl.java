@@ -91,4 +91,14 @@ public class UserServiceImpl implements UserServiceInterface{
             return null;
         }
     }
+
+    @Override
+    public String getAvatarUrl(String username) throws UserNotFoundCustomException {
+        UserEntity userEntity = userRepository.findByUsername(username);
+        if(userEntity == null){
+            throw new UserNotFoundCustomException("Username not found. Please check again.");
+        }else {
+            return userEntity.getAvatarUrl();
+        }
+    }
 }

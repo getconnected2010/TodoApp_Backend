@@ -2,7 +2,7 @@ package com.CRUD.TodoApp.controller;
 
 import com.CRUD.TodoApp.entity.TodoEntity;
 import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
-import com.CRUD.TodoApp.model.usernameModel;
+import com.CRUD.TodoApp.model.UsernameModel;
 import com.CRUD.TodoApp.service.TodoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +27,7 @@ public class TodoController {
 
     //fetches all tasks associated to specific username
     @GetMapping("/todo/username/{username}")
-    public List<TodoEntity> getTodoByUsername(@Valid usernameModel usernameModel) throws UserNotFoundCustomException {
+    public List<TodoEntity> getTodoByUsername(@Valid UsernameModel usernameModel) throws UserNotFoundCustomException {
         return todoService.findByUsername(usernameModel.getUsername());
     }
 
