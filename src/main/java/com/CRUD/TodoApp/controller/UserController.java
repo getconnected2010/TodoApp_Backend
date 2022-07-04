@@ -12,33 +12,36 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
+//user api endpoints
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserServiceImpl userService;
 
-    @GetMapping("/user/all")
+    @GetMapping("/all")
     public List<UserEntity> getAllUsers(){
         return userService.findAllUsers();
     }
 
-    @GetMapping("/user/avatar/{username}")
+    //gets the avatar url from database
+    @GetMapping("/avatar/{username}")
     public String getAvatarUrl(@Valid @PathVariable("username") UsernameModel usernameModel) throws UserNotFoundCustomException {
         String username = usernameModel.getUsername();
         return userService.getAvatarUrl(username);
     }
 
-    @PostMapping("/user")
+    @PostMapping("/add")
     public String addUser(@RequestBody UserEntity userEntity){
         userService.addUser(userEntity);
         return "User successfully saved to database";
     }
 
-    //upload avatar. It receives file and username as form data.
-    @PutMapping("/user/avatar")
+    //upload avatar. It receives file and username as form data, uploads the image file, then records the s3 url in database.
+    @PutMapping("/avatar")
     public String updateAvatar(@RequestParam MultipartFile file, UsernameModel username) throws IOException, UserNotFoundCustomException {
         userService.updateAvatar(file, username.getUsername());
-        return "???? return type of updateAvatarController?????";
+        return "Avatar successfully uploaded.";
     }
 }
