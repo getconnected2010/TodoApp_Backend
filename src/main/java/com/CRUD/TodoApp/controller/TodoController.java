@@ -82,8 +82,8 @@ public class TodoController {
     //deletes all items in todolist with a username
     @DeleteMapping("/delete/username/{username}")
     @ApiOperation(value = "Delete all tasks for a username", notes = "Deletes all tasks for a specific username from database using username as input.")
-    public int deleteByUsername(@PathVariable("username") String username){
-        return todoService.deleteByUsername(username);
+    public String deleteByUsername(@Valid UsernameModel usernameModel) {
+        int rowsAffected = todoService.deleteByUsername(usernameModel.getUsername());
+        return rowsAffected + " records were deleted.";
     }
-
 }
