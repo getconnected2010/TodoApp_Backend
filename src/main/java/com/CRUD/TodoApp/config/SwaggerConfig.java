@@ -1,24 +1,29 @@
 package com.CRUD.TodoApp.config;
 
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
 
 @Configuration
-@EnableSwagger2
-public class SwaggerConfig {
+//@EnableSwagger2
+@EnableWebMvc
+public class SwaggerConfig implements WebMvcConfigurer {
 
     //it configures which endpoints are available in swagger UI.
     @Bean
-    public Docket swaggerBean(){
+    public Docket swaggerConfigBean(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiDetails())
                 .select()

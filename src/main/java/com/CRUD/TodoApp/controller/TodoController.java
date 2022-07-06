@@ -5,6 +5,7 @@ import com.CRUD.TodoApp.exceptions.UserNotFoundCustomException;
 import com.CRUD.TodoApp.model.UsernameModel;
 import com.CRUD.TodoApp.service.TodoServiceImpl;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import java.util.List;
 //'todo' api endpoints
 @RestController
 @RequestMapping("/todo")
+//@SecurityRequirement(name = "todoListApi")
 public class TodoController {
 
     @Autowired
