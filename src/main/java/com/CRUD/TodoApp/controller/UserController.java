@@ -38,10 +38,16 @@ public class UserController {
     }
 
     @PostMapping("/add")
- //   @ApiOperation(value = "Register user", notes = "Registers a user into the database.")
     public String addUser(@RequestBody UserEntity userEntity){
         userService.addUser(userEntity);
         return "User successfully saved to database";
+    }
+
+    //updates a user's password
+    @PutMapping("/update/password/{password}/{username}")
+    public String updatePassword(@Valid @PathVariable("password") String password, @PathVariable("username") UsernameModel usernameModel) throws UserNotFoundCustomException{
+        userService.updatePassword(password, usernameModel.getUsername());
+        return "Password successfully updated";
     }
 
     //upload avatar. It receives file and username as form data, uploads the image file, then records the s3 url in database.

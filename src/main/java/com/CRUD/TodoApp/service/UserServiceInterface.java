@@ -22,4 +22,6 @@ public interface UserServiceInterface {
     String updateAvatar(MultipartFile file, String username) throws IOException, UserNotFoundCustomException;
 
     String getAvatarUrl(String username) throws UserNotFoundCustomException;
+
+    void updatePassword(String password, String username) throws UserNotFoundCustomException;
 }

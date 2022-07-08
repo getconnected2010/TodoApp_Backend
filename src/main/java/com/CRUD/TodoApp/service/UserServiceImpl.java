@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.PutObjectResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserServiceInterface{
 
     @Autowired
     UserRepository userRepository;
+    //for password operations.
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     private AmazonS3 amazonS3;
@@ -52,6 +56,12 @@ public class UserServiceImpl implements UserServiceInterface{
 
     @Override
     public String addUser(UserEntity userEntity) {
+        //encrypts the incoming plain password from user.
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+        //sets user role default as 'user'.
+        if(userEntity.getRole() == null){
+            userEntity.setRole("USER");
+        }
         userRepository.save(userEntity);
         return "User Successfully added";
     }
@@ -97,5 +107,11 @@ public class UserServiceImpl implements UserServiceInterface{
         }else {
             return userEntity.getAvatarUrl();
         }
+    }
+
+    @Override
+    public void updatePassword(String password, String username) throws UserNotFoundCustomException {
+        String newPassword = passwordEncoder.encode(password);
+        userRepository.updatePassword(newPassword, username);
     }
 }

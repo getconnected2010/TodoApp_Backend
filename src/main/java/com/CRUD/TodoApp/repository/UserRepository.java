@@ -17,4 +17,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Modifying
     @Query(value = "Update todo_app.users set avatar_url = ?1 where username = ?2", nativeQuery = true)
     void updateAvatarUrl(String avatarUrl, String username);
+
+
+    //updates database password
+    @Transactional
+    @Modifying
+    @Query(value = "update todo_app.users set password =?1 where username = ?2", nativeQuery = true)
+    void updatePassword(String newPassword, String username);
 }
